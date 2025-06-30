@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css\aggcalc.css">
+
+</head>
+<body>
+<!-- Add this right after the header for better page structure -->
+<div class="container">
+    <div class="header">
+        <div class="school-logo">
+            <img src="https://www.springfieldsec.moe.edu.sg/images/sfsslogo2.png" alt="School Logo">
+        </div>
+        <div class="header-text">
+            <!-- <h1>Springfield Secondary School</h1> -->
+            <h1>Subject Grade Aggregate Calculator</h1>
+        </div>
+    </div>
+
+    <div class="disclaimer-section">
+        <div class="disclaimer-title" onclick="toggleDisclaimer()">
+            Important Notes
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div class="disclaimer-content" id="disclaimerContent">
+            <p>Please read before using the Aggregate Calculator:</p>
+            <ul>
+                <li>This Aggregate Calculator is not an official tool and is used for simulation purposes only</li>
+                <li>Is based on upper secondary subject combination</li>
+                <li>While efforts have been made to ensure accuracy, by using this Aggregate Calculator, you acknowledge that errors or bugs may exist, and in cases of discrepancy, aggregate scores provided by SEAB shall prevail.</li>
+                <li>MT(B) is not listed as Grades can't be used to compute aggregates</li>
+                <li>Only subjects and levels offered by Springfield Secondary School are listed in this Aggregate Calculator. Subjects offered by the school may vary from year to year i.e. certain subjects listed here may not be offered to certain batches of students.</li>
+            </ul>
+            <div class="acknowledgement">
+                <div class="checkbox-container">
+                    <input type="checkbox" id="disclaimerCheckbox">
+                    <label for="disclaimerCheckbox">I have read and understood the above information</label>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="questions-container" style="margin: 20px;">
+    <!-- Question 1 -->
+    <div class="question-block" style="margin-bottom: 20px;">
+        <label style="font-weight: bold;">1. Which examinations will you be taking?</label>
+        <select id="exam-type" style="display: block; width: 60%; padding: 8px; margin-top: 5px;">
+            <option value="">Please select</option>
+            <option value="olevel">Non Full SBB - O-level examinations in Year 2025 or 2026</option>
+            <option value="na">Non Full SBB - N(A)-level examinations in Year 2025 or 2026</option>
+            <option value="nt">Non Full SBB - N(T)-level examinations in Year 2025 or 2026</option>            
+            <option value="sec">Full SBB - Singapore-Cambridge Secondary Education Certificate (SEC) in Year 2027 or after</option>
+        </select>
+    </div>
+
+    <!-- Question 2 -->
+    <div class="question-block" style="margin-bottom: 20px;">
+        <label style="font-weight: bold;">2. What is your CCA Grade? Please check with your PE teacher if you are uncertain of your CCA Grade</label>
+        <div class="radio-group" style="margin-top: 5px;">
+            <div style="margin: 5px 0;">
+                <input type="radio" id="cca-excellent" name="cca-grade" value="excellent">
+                <label for="cca-excellent">Excellent - 2 bonus points</label>
+            </div>
+            <div style="margin: 5px 0;">
+                <input type="radio" id="cca-good" name="cca-grade" value="good">
+                <label for="cca-good">Good - 1 bonus point</label>
+            </div>
+            <div style="margin: 5px 0;">
+                <input type="radio" id="cca-fair" name="cca-grade" value="fair">
+                <label for="cca-fair">Fair - no bonus point</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Question 3 -->
+    <!-- <div class="question-block" style="margin-bottom: 20px;">
+        <label style="font-weight: bold;">3. Select the subjects in your subject combination and select your grades</label>
+        <p style="margin-top: 5px;">Please refer to the subject selection table below.</p>
+    </div> -->
+</div>
+
+<!-- Add this right after the header for better page structure -->
+<!-- <div class="container"> -->
+    <div class="instructions">
+        <p>Please select your subjects and input your grades to calculate your score.</p>
+    </div>
+<!-- Add this before your subject matrix table -->
+<div class="button-container top-buttons">
+    <button id="resetButtonTop" class="reset-btn">Reset All</button>
+</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Subjects</th>
+                <th>Exp/G3</th>
+                <th>NA/G2</th>
+                <th>NT/G1</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- English (no checkbox as it's mandatory) -->
+            <tr>
+                <td class="subject-type">English</td>
+                <td>English Language</td>
+                <td>
+                    <select id="eng_g3">
+                        <option value="">Select Grade</option>
+                        <option value="A1">A1</option>
+                        <option value="A2">A2</option>
+                        <option value="B3">B3</option>
+                        <option value="B4">B4</option>
+                        <option value="C5">C5</option>
+                        <option value="C6">C6</option>
+                        <option value="D7">D7</option>
+                        <option value="E8">E8</option>
+                        <option value="9">9</option>
+                    </select>
+                </td>
+                <td>
+                    <select id="eng_g2">
+                        <option value="">Select Grade</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </td>
+                <td>
+                    <select id="eng_g1">
+                        <option value="">Select Grade</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                    </select>
+                </td>
+            </tr>
+
+            <!-- Mother Tongue Options (Radio buttons) -->
+            <tr>
+                <td class="subject-type" rowspan="4">Others</td>
+                <td colspan="4">
+                    <input type="radio" name="mtl_option" class="subject-select" id="none_mtl" checked>
+                    None of the following
+                </td>
+                </tr>
+                <tr>
+                <td>
+                    <input type="radio" name="mtl_option" class="subject-select" id="hmtl">
+                    Higher Chinese/Malay/Tamil
+                </td>
+                <td>
+                    <select id="hmtl_g3">
+                        <option value="">Select Grade</option>
+                        <option value="A1">A1</option>
+                        <option value="A2">A2</option>
+                        <option value="B3">B3</option>
+                        <option value="B4">B4</option>
+                        <option value="C5">C5</option>
+                        <option value="C6">C6</option>
+                        <option value="D7">D7</option>
+                        <option value="E8">E8</option>
+                        <option value="9">9</option>
+                    </select>
+                </td>
+                <td><select id="hmtl_g2">
+				 <option value="">Select Grade</option>
+				<option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option> </select></td>
+                <td><select id="hmtl_g1"><option value="">Select Grade</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option></select></td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="radio" name="mtl_option" class="subject-select" id="mtl">
+                    Chinese/Malay/Tamil
+                </td>
+                <td>
+                    <select id="mtl_g3">
+                        <option value="">Select Grade</option>
+                        <option value="A1">A1</option>
+                        <option value="A2">A2</option>
+                        <option value="B3">B3</option>
+                        <option value="B4">B4</option>
+                        <option value="C5">C5</option>
+                        <option value="C6">C6</option>
+                        <option value="D7">D7</option>
+                        <option value="E8">E8</option>
+                        <option value="9">9</option>
+                    </select>
+                </td>
+                <td>
+                    <select id="mtl_g2">
+                        <option value="">Select Grade</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </td>
+                <td>
+                    <select id="mtl_g1">
+                        <option value="">Select Grade</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="radio" name="mtl_option" class="subject-select" id="mtl_lieu">
+                    MTL-in-lieu
+                </td>
+                <td>
+                    <select id="mtl_lieu_g3">
+                        <option value="">Select Grade</option>
+                        <option value="A1">A1</option>
+                        <option value="A2">A2</option>
+                        <option value="B3">B3</option>
+                        <option value="B4">B4</option>
+                        <option value="C5">C5</option>
+                        <option value="C6">C6</option>
+                        <option value="D7">D7</option>
+                        <option value="E8">E8</option>
+                        <option value="9">9</option>
+                    </select>
+                </td>
+                <td>
+                    <select id="mtl_lieu_g2">
+                        <option value="">Select Grade</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </td>
+                <td>
+                    <select id="mtl_lieu_g1">
+                        <option value="">Select Grade</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                    </select>
+                </td>
+            </tr>
+
+            <!-- Mathematics Section -->
+            <tr>
+                <td class="subject-type" rowspan="2">Mathematics</td>
+                <td>
+                    <input type="checkbox" class="subject-select" id="math">
+                    Mathematics
+                </td>
+                <td>
+                    <select id="math_g3">
+                        <option value="">Select Grade</option>
+                        <option value="A1">A1</option>
+                        <option value="A2">A2</option>
+                        <option value="B3">B3</option>
+                        <option value="B4">B4</option>
+                        <option value="C5">C5</option>
+                        <option value="C6">C6</option>
+                        <option value="D7">D7</option>
+                        <option value="E8">E8</option>
+                        <option value="9">9</option>
+                    </select>
+                </td>
+                <td>
+                    <select id="math_g2">
+                        <option value="">Select Grade</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </td>
+                <td>
+                    <select id="math_g1">
+                        <option value="">Select Grade</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                    </select>
+                </td>
+            </tr>
+            <tr id="addmath">
+                <td>
+                    <input type="checkbox" class="subject-select" id="amath">
+                    Additional Mathematics
+                </td>
+                <td>
+                    <select id="amath_g3">
+                        <option value="">Select Grade</option>
+                        <option value="A1">A1</option>
+                        <option value="A2">A2</option>
+                        <option value="B3">B3</option>
+                        <option value="B4">B4</option>
+                        <option value="C5">C5</option>
+                        <option value="C6">C6</option>
+                        <option value="D7">D7</option>
+                        <option value="E8">E8</option>
+                        <option value="9">9</option>
+                    </select>
+                </td>
+                <td>
+                    <select id="amath_g2">
+                        <option value="">Select Grade</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </td>
+                <td><select id="amath_g1"> <option value="">Select Grade</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option></select></td>
+            </tr>
+
+            <!-- Humanities Section -->
+            <tr>
+                <td class="subject-type">Humanities</td>
+                <td>
+                    <input type="checkbox" class="subject-select" id="humanities">
+                    Combined Humanities
+                </td>
+                <td>
+                    <select id="humanities_g3">
+                        <option value="">Select Grade</option>
+                        <option value="A1">A1</option>
+                        <option value="A2">A2</option>
+                        <option value="B3">B3</option>
+                        <option value="B4">B4</option>
+                        <option value="C5">C5</option>
+                        <option value="C6">C6</option>
+                        <option value="D7">D7</option>
+                        <option value="E8">E8</option>
+                        <option value="9">9</option>
+                    </select>
+                </td>
+                <td>
+                    <select id="humanities_g2">
+                        <option value="">Select Grade</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </td>
+                <td>
+                    <select id="humanities_g1">
+                        <option value="">Select Grade</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                    </select>
+                </td>
+            </tr>
+
+            <!-- Sciences Section -->
+            <tr>
+                <td class="subject-type" rowspan="4">Sciences</td>
+                <td>
+                    <input type="checkbox" class="subject-select" id="biology">
+                    Biology
+                </td>
+                <td>
+                    <select id="biology_g3">
+                        <option value="">Select Grade</option>
+                        <option value="A1">A1</option>
+                        <option value="A2">A2</option>
+                        <option value="B3">B3</option>
+                        <option value="B4">B4</option>
+                        <option value="C5">C5</option>
+                        <option value="C6">C6</option>
+                        <option value="D7">D7</option>
+                        <option value="E8">E8</option>
+                        <option value="9">9</option>
+                    </select>
+                </td>
+                <td><select id="biology_g2">  <option value="">Select Grade</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option></select></td>
+                <td><select id="biology_g1"> <option value="">Select Grade</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option></select></td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" class="subject-select" id="chemistry">
+                    Chemistry
+                </td>
+                <td>
+                    <select id="chemistry_g3">
+                        <option value="">Select Grade</option>
+                        <option value="A1">A1</option>
+                        <option value="A2">A2</option>
+                        <option value="B3">B3</option>
+                        <option value="B4">B4</option>
+                        <option value="C5">C5</option>
+                        <option value="C6">C6</option>
+                        <option value="D7">D7</option>
+                        <option value="E8">E8</option>
+                        <option value="9">9</option>
+                    </select>
+                </td>
+                <td><select id="chemistry_g2"> <option value="">Select Grade</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option></select></td>
+                <td><select id="chemistry_g1"> <option value="">Select Grade</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option></select></td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" class="subject-select" id="physics">
+                    Physics
+                </td>
+                <td>
+                    <select id="physics_g3">
+                        <option value="">Select Grade</option>
+                        <option value="A1">A1</option>
+                        <option value="A2">A2</option>
+                        <option value="B3">B3</option>
+                        <option value="B4">B4</option>
+                        <option value="C5">C5</option>
+                        <option value="C6">C6</option>
+                        <option value="D7">D7</option>
+                        <option value="E8">E8</option>
+                        <option value="9">9</option>
+                    </select>
+                </td>
+                <td><select id="physics_g2"> <option value="">Select Grade</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option></select></td>
+                <td><select id="physics_g1"> <option value="">Select Grade</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option></select></td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" class="subject-select" id="combined_science">
+                     Science
+                </td>
+                <td>
+                    <select id="combined_science_g3">
+                        <option value="">Select Grade</option>
+                        <option value="A1">A1</option>
+                        <option value="A2">A2</option>
+                        <option value="B3">B3</option>
+                        <option value="B4">B4</option>
+                        <option value="C5">C5</option>
+                        <option value="C6">C6</option>
+                        <option value="D7">D7</option>
+                        <option value="E8">E8</option>
+                        <option value="9">9</option>
+                    </select>
+                </td>
+                <td>
+                    <select id="combined_science_g2">
+                        <option value="">Select Grade</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </td>
+                <td>
+                    <select id="combined_science_g1">
+                        <option value="">Select Grade</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                    </select>
+                </td>
+            </tr>
+
+            <!-- Others Section -->
+            <tr>
+                <td class="subject-type">Others</td>
+                <td>
+                    <input type="checkbox" class="subject-select" id="poa">
+                    Principles of Accounts
+                </td>
+                <td>
+                    <select id="poa_g3">
+                        <option value="">Select Grade</option>
+                        <option value="A1">A1</option>
+                        <option value="A2">A2</option>
+                        <option value="B3">B3</option>
+                        <option value="B4">B4</option>
+                        <option value="C5">C5</option>
+                        <option value="C6">C6</option>
+                        <option value="D7">D7</option>
+                        <option value="E8">E8</option>
+                        <option value="9">9</option>
+                    </select>
+                </td>
+                <td>
+                    <select id="poa_g2">
+                        <option value="">Select Grade</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </td>
+                <td><select id="poa_g1"> <option value="">Select Grade</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option></select></td>
+            </tr>
+            <!-- <tr>
+                <td class="subject-type" rowspan="6">Others</td>
+                <td>
+                    <input type="radio" name="others_group" class="subject-select" id="none_others" checked>
+                    None of the following
+                </td>
+                <td colspan="3"></td>
+            </tr> -->
+            <tr>
+    <td class="subject-type" rowspan="5">Others</td>
+    <td colspan="4">
+        <input type="radio" name="others_group" class="subject-select" id="none_others" checked>
+        None of the following
+    </td>
+    </tr>
+    <tr>
+    <td>
+        <input type="radio" name="others_group" class="subject-select" id="art">
+        Art
+    </td>
+    <td>
+        <select id="art_g3">
+            <option value="">Select Grade</option>
+            <option value="A1">A1</option>
+            <option value="A2">A2</option>
+            <option value="B3">B3</option>
+            <option value="B4">B4</option>
+            <option value="C5">C5</option>
+            <option value="C6">C6</option>
+            <option value="D7">D7</option>
+            <option value="E8">E8</option>
+            <option value="9">9</option>
+        </select>
+    </td>
+    <td>
+        <select id="art_g2">
+            <option value="">Select Grade</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+        </select>
+    </td>
+    <td>
+        <select id="art_g1">
+            <option value="">Select Grade</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="E">E</option>
+        </select>
+    </td>
+</tr>
+<!-- <tr>
+    <td>
+        <input type="radio" name="others_group" class="subject-select" id="computing">
+        Computing
+    </td>
+    <td>
+        <select id="computing_g3">
+            <option value="">Select Grade</option>
+            <option value="A1">A1</option>
+            <option value="A2">A2</option>
+            <option value="B3">B3</option>
+            <option value="B4">B4</option>
+            <option value="C5">C5</option>
+            <option value="C6">C6</option>
+            <option value="D7">D7</option>
+            <option value="E8">E8</option>
+            <option value="9">9</option>
+        </select>
+    </td>
+    <td>
+        <select id="computing_g2">
+            <option value="">Select Grade</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+        </select>
+    </td>
+    <td>
+        <select id="computing_g1">
+            <option value="">Select Grade</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="E">E</option>
+        </select>
+    </td>
+</tr> -->
+<tr>
+    <td>
+        <input type="radio" name="others_group" class="subject-select" id="dnt">
+        Design & Technology
+    </td>
+    <td>
+        <select id="dnt_g3">
+            <option value="">Select Grade</option>
+            <option value="A1">A1</option>
+            <option value="A2">A2</option>
+            <option value="B3">B3</option>
+            <option value="B4">B4</option>
+            <option value="C5">C5</option>
+            <option value="C6">C6</option>
+            <option value="D7">D7</option>
+            <option value="E8">E8</option>
+            <option value="9">9</option>
+        </select>
+    </td>
+    <td>
+        <select id="dnt_g2">
+            <option value="">Select Grade</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+        </select>
+    </td>
+    <td>
+        <select id="dnt_g1">
+            <option value="">Select Grade</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="E">E</option>
+        </select>
+    </td>
+</tr>
+<tr>
+    <td>
+        <input type="radio" name="others_group" class="subject-select" id="nfs">
+        Nutrition and Food Science
+    </td>
+    <td>
+        <select id="nfs_g3">
+            <option value="">Select Grade</option>
+            <option value="A1">A1</option>
+            <option value="A2">A2</option>
+            <option value="B3">B3</option>
+            <option value="B4">B4</option>
+            <option value="C5">C5</option>
+            <option value="C6">C6</option>
+            <option value="D7">D7</option>
+            <option value="E8">E8</option>
+            <option value="9">9</option>
+        </select>
+    </td>
+    <td>
+        <select id="nfs_g2">
+            <option value="">Select Grade</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+        </select>
+    </td>
+    <td>
+        <select id="nfs_g1">
+            <option value="">Select Grade</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="E">E</option>
+        </select>
+    </td>
+</tr>
+<tr>
+    <td>
+        <input type="radio" name="others_group" class="subject-select" id="ebs">
+        Elements of Business Skills
+    </td>
+    <td>
+        <select id="ebs_g3">
+            <option value="">Select Grade</option>
+            <option value="A1">A1</option>
+            <option value="A2">A2</option>
+            <option value="B3">B3</option>
+            <option value="B4">B4</option>
+            <option value="C5">C5</option>
+            <option value="C6">C6</option>
+            <option value="D7">D7</option>
+            <option value="E8">E8</option>
+            <option value="9">9</option>
+        </select>
+    </td>
+    <td>
+        <select id="ebs_g2">
+            <option value="">Select Grade</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+        </select>
+    </td>
+    <td>
+        <select id="ebs_g1">
+            <option value="">Select Grade</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="E">E</option>
+        </select>
+    </td>
+</tr>
+        </tbody>
+    </table>
+    <!-- Add this button before the end of your table or where you want it to appear -->
+
+<div class="button-container">
+    <button id="calculateButton" class="calculate-btn">Calculate Aggregate Score</button>   
+    <button id="resetButton" class="reset-btn">Reset All</button>
+    <div class="results-container">
+    <div id="gradeTotal" class="grandtotal-message">Gross Aggregator</div>
+    <div id="tagMessageDiv" class="validation-message">Eligibility for JC/MI and Polytechinics for selected exam type</div>
+    <div id="eligibility-message">
+    <table>
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Aggregate Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- JC Section -->
+            <tr>
+                <td>
+                    <div>JC - L1R5</div>
+                    <div class="description">(Gross ≤20)</div>
+                </td>
+                <td class="score-input">
+                   <label id="jc_l1r5" >
+                </td>
+            </tr>
+
+            <!-- MI Section -->
+            <tr>
+                <td>
+                    <div>MI - L1R4</div>
+                    <div class="description">(Gross ≤20)</div>
+                </td>
+                <td class="score-input">
+                   <label id="mi_l1r4" >
+                </td>
+            </tr>
+
+            <!-- Polytechnic Section -->
+            <tr>
+                <td>
+                    <div>Polytechnic - ELR2B2-A</div>
+                    <div class="description">(Net ≤26)</div>
+                </td>
+                <td class="score-input">
+                   <label id="poly_elr2b2_a" >
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>Polytechnic - ELR2B2-B</div>
+                    <div class="description">(Net ≤26)</div>
+                </td>
+                <td class="score-input">
+                   <label id="poly_elr2b2_b" >
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>Polytechnic - ELR2B2-C</div>
+                    <div class="description">(Net ≤26)(Nursing Net ≤28)</div>
+                </td>
+                <td class="score-input">
+                   <label id="poly_elr2b2_c" >
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>Polytechnic - ELR2B2-D</div>
+                    <div class="description">(Net ≤26)</div>
+                </td>
+                <td class="score-input">
+                   <label id="poly_elr2b2_d" >
+                </td>
+            </tr>
+
+            <!-- ITE Section -->
+            <tr>
+                <td>ITE - ELB4-A</td>
+                <td class="score-input">
+                   <label id="ite_elb4_a" >
+                </td>
+            </tr>
+            <tr>
+                <td>ITE - ELR1B3-B</td>
+                <td class="score-input">
+                   <label id="ite_elr1b3_b" >
+                </td>
+            </tr>
+            <tr>
+                <td>ITE - ELR2B2-C</td>
+                <td class="score-input">
+                   <label id="ite_elr2b2_c" >
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>ITE - Best 5 (JIE-O)</div>
+                </td>
+                <td class="score-input">
+                   <label id="ite_best5" >
+                </td>
+            </tr>
+
+            <!-- NAFA/LASALLE Section -->
+            <tr>
+                <td>
+                    <div>NAFA/LASALLE - Best 4</div>
+                    <div class="description">(Excludes English)(Gross ≤25)</div>
+                </td>
+                <td class="score-input">
+                   <label id="nafa_best4" >
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>NAFA/LASALLE (Grade 1 to 6) / BCA Academy (Grade 1 to 7) - English</div>
+                </td>
+                <td class="score-input">
+                   <label id="nafa_bca_english" >
+                </td>
+            </tr>
+
+            <!-- BCA Academy Section -->
+            <tr>
+                <td>
+                    <div>BCA Academy - Mathematics</div>
+                    <div class="description">(Grade 1 to 6)</div>
+                </td>
+                <td class="score-input">
+                   <label id="bca_math" >
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>BCA Academy - 2 Relevant Subjects [Science/D&T]</div>
+                    <div class="description">(Grade 1 to 6)</div>
+                </td>
+                <td class="score-input">
+                   <label id="bca_relevant1" min="0" max="99" placeholder="Subject 1">
+                   <label id="bca_relevant2" min="0" max="99" placeholder="Subject 2">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>  
+</div>
+</div>
+</div>
+<button onclick="debugSubjects()" style="margin: 10px;">Debug Subjects</button>
+
+
+     <!-- Add script at the end of body -->
+     <script src="js/aggcalc.js"></script> 
+</body>
+</html>
