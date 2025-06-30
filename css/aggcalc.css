@@ -1,0 +1,429 @@
+
+/* header,school-logo, school-logo img, header-text h1, header-text h2, * Optional: Add responsive design @media, container, instructions,instructions.p , table    */
+
+    .header {
+background: linear-gradient(to right, #038066 , #038066 );
+color: white;
+padding: 20px;
+text-align: center;
+margin-bottom: 30px;
+box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.school-logo {
+margin-bottom: 15px;
+}
+
+.school-logo img {
+height: 80px;
+width: auto;
+}
+
+.header-text h1 {
+font-size: 2em;
+margin: 0;
+font-weight: 600;
+text-transform: uppercase;
+letter-spacing: 1px;
+}
+
+.header-text h2 {
+font-size: 1.3em;
+margin: 10px 0 0 0;
+font-weight: 400;
+color: #e8eaf6;
+}
+
+/* Optional: Add responsive design */
+@media (max-width: 768px) {
+.header-text h1 {
+    font-size: 1.5em;
+}
+.header-text h2 {
+    font-size: 1.1em;
+}
+.school-logo img {
+    height: 60px;
+}
+}
+
+.container {
+max-width: 1200px;
+margin: 0 auto;
+padding: 0 20px;
+}
+
+.instructions {
+background-color: #038066 ;
+padding: 15px;
+border-radius: 5px;
+margin-bottom: 20px;
+border-left: 4px solid #1a237e;
+}
+
+.instructions p {
+margin: 0;
+color: #ffffff;
+font-size: 1.1em;
+}
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 20px 0;
+    }
+    
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    
+    th {
+        background-color: #f2f2f2;
+    }
+    
+    .subject-type {
+        background-color: #f9f9f9;
+        font-weight: bold;
+    }
+    
+    select {
+        width: 100%;
+        padding: 5px;
+    }
+    
+    .disabled {
+        background-color: #eee;
+        color: #999;
+        pointer-events: none;
+    }
+    
+    .subject-select {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+        vertical-align: middle;
+    }
+    
+    .grade-cell {
+        display: flex;
+        align-items: center;
+    }
+    
+    .grade-select {
+        flex: 1;
+        margin-left: 10px;
+    }
+    
+    .greyed-out {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    /* .button-container {
+text-align: center;
+margin: 30px 0;
+} */
+
+.calculate-btn {
+background-color: #038066;
+color: white;
+padding: 12px 24px;
+border: none;
+border-radius: 5px;
+font-size: 16px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+
+.calculate-btn:hover {
+background-color: #038055;
+}
+
+.calculate-btn:disabled {
+background-color: #9e9e9e;
+cursor: not-allowed;
+}
+
+.validation-message {
+color: #d32f2f;
+margin-top: 10px;
+font-size: 14px;
+min-height: 20px;
+width: 100%;
+}
+
+/* Success message style */
+.validation-message.success {
+color: #2e7d32;
+}
+
+
+/* .disclaimer-section, disclaimer-title, disclaimer-content, disclaimer-content ul, disclaimer-content li, acknowledgement, checkbox-container, checkbox-container input[type="checkbox"]. checkbox-container label     */
+
+.disclaimer-section {
+    background-color: #fff3e0;
+    border: 1px solid #ffb74d;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.disclaimer-title {
+    color: #e65100;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.disclaimer-content {
+    font-size: 0.95em;
+    line-height: 1.5;
+}
+
+.disclaimer-content ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    padding-left: 0;
+}
+
+.disclaimer-content li {
+    margin-bottom: 10px;
+}
+
+.acknowledgement {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #ffb74d;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.checkbox-container input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.checkbox-container label {
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* calculate-btn.disabled , calculate-btn.enabled */
+
+.calculate-btn.disabled {
+    background-color: #9e9e9e !important;
+    cursor: not-allowed !important;
+}
+
+.calculate-btn.enabled {
+    background-color: #038066 !important;
+    cursor: pointer !important;
+}
+
+
+.validation-message {
+margin: 10px 0;
+padding: 10px;
+border: 1px solid #ccc;
+background-color: #f9f9f9;
+}
+
+.tag-result {
+margin-top: 10px;
+}
+
+.tag-result h3 {
+color: #333;
+margin-bottom: 10px;
+}
+
+.selected-subjects {
+margin-left: 20px;
+}
+
+.selected-subjects p {
+margin: 5px 0;
+}
+
+
+.top-buttons {
+margin-bottom: 20px; /* Space between buttons and table */
+}
+
+.button-container {
+display: flex;
+gap: 10px; /* Space between buttons */
+align-items: center;
+}
+
+.reset-btn {
+background-color: #f44336;
+color: white;
+padding: 10px 20px;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+}
+
+.reset-btn:hover {
+background-color: #da190b;
+}
+
+/* If you want the top button to be right-aligned */
+.top-buttons {
+display: flex;
+justify-content: flex-end;
+}
+
+/* Or if you want it left-aligned */
+/*
+.top-buttons {
+display: flex;
+justify-content: flex-start;
+}
+*/
+
+
+/* CSS to collapse / expand the disclaimer DIV */
+
+.disclaimer-title {
+background-color: #f0f0f0;
+padding: 10px;
+cursor: pointer;
+user-select: none;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.toggle-icon {
+font-size: 12px;
+transition: transform 0.3s ease;
+}
+
+.disclaimer-content {
+max-height: 1000px; /* Adjust based on your content */
+overflow: hidden;
+transition: max-height 0.3s ease-out;
+}
+
+.disclaimer-content.collapsed {
+max-height: 0;
+}
+
+.disclaimer-title:hover {
+background-color: #e0e0e0;
+}
+
+.toggle-icon.rotated {
+transform: rotate(-180deg);
+}
+
+
+
+
+/* Add these new CSS rules */
+.button-container {
+display: flex;
+flex-wrap: wrap;
+gap: 10px;
+align-items: start;
+}
+
+.calculate-btn, .reset-btn {
+/* your existing button styles */
+}
+
+
+/* Add container styles */
+.results-container {
+display: flex;
+flex-direction: column;
+gap: 20px;
+width: 100%;
+}
+
+/* Modify existing styles */
+.validation-message, .grandtotal-message {
+margin: 0;  /* Remove margin since we're using gap */
+padding: 15px;
+border: 1px solid #ccc;
+background-color: #f9f9f9;
+width: 100%;  /* Replace flex: 1 with width: 100% */
+box-sizing: border-box;
+min-width: 200px;
+}
+
+/* Keep your existing styles */
+.grandtotal-message {
+color: #1565c0;
+border-left: 4px solid #1565c0;
+background-color: #e3f2fd;
+}
+
+.grandtotal-message strong {
+display: block;
+margin-bottom: 5px;
+font-size: 16px;
+}
+
+.grandtotal-message small {
+display: block;
+font-size: 13px;
+max-height: 150px;
+overflow-y: auto;
+padding-right: 5px;
+}
+
+/* Scrollbar styles remain the same */
+.grandtotal-message small::-webkit-scrollbar {
+width: 6px;
+}
+
+.grandtotal-message small::-webkit-scrollbar-track {
+background: #f1f1f1;
+}
+
+.grandtotal-message small::-webkit-scrollbar-thumb {
+background: #1565c0;
+border-radius: 3px;
+}
+
+/* Add responsive styles if needed */
+@media (max-width: 768px) {
+.results-container {
+    gap: 15px;
+}
+
+.validation-message, .grandtotal-message {
+    padding: 12px;
+}
+}
+/* Responsive layout */
+@media (max-width: 768px) {
+.button-container {
+    flex-direction: column;
+}
+
+.validation-message, .grandtotal-message {
+    width: 100%;
+}
+}
+
+#eligibility-message {
+    display: none;  /* Initially hidden */
+    opacity: 0;     /* For fade-in effect */
+    transition: opacity 0.3s ease-in-out;  /* Smooth transition */
+}
+
+#eligibility-message.show {
+    display: block;
+    opacity: 1;
+}
